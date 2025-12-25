@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayPal MVP - Güvenli Para Transferi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- Login/Register Screen -->
+    <div id="authScreen" class="screen active">
+        <div class="auth-container">
+            <div class="logo">
+                <h1><span class="logo-p1">P</span><span class="logo-p2">P</span></h1>
+                <p class="logo-text">PayPal</p>
+                <p class="tagline">Email ile güvenli ve hızlı para transferi</p>
+            </div>
+            
+            <!-- Theme Toggle -->
+            <div class="theme-toggle-container">
+                <button onclick="toggleTheme()" class="theme-toggle" id="themeToggle">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
+
+            <!-- Login Form -->
+            <div id="loginForm" class="form-container active">
+                <h2>Giriş Yap</h2>
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="loginEmail" placeholder="ornek@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Şifre</label>
+                        <input type="password" id="loginPassword" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Giriş Yap</button>
+                </form>
+                <p class="switch-form">
+                    Hesabın yok mu? <a href="#" onclick="showRegister()">Kayıt Ol</a>
+                </p>
+            </div>
+
+            <!-- Register Form -->
+            <div id="registerForm" class="form-container">
+                <h2>Hesap Oluştur</h2>
+                <form onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="registerEmail" placeholder="ornek@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Şifre</label>
+                        <input type="password" id="registerPassword" placeholder="••••••••" required>
+                    </div>
+                    <div class="info-box">
+                        🎁 Yeni üyelere 100 TL hoş geldin bonusu!
+                    </div>
+                    <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+                </form>
+                <p class="switch-form">
+                    Zaten hesabın var mı? <a href="#" onclick="showLogin()">Giriş Yap</a>
+                </p>
+            </div>
+
+            <div id="authMessage" class="message"></div>
+        </div>
+    </div>
+
+    <!-- Dashboard Screen -->
+    <div id="dashboardScreen" class="screen">
+        <div class="dashboard-container">
+            <!-- Header -->
+            <div class="header">
+                <div class="logo-small">
+                    <span class="logo-p1">P</span><span class="logo-p2">P</span>
+                </div>
+                <div class="user-info">
+                    <button onclick="toggleTheme()" class="theme-toggle btn-icon" id="dashboardThemeToggle">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                    <span id="userEmail" style="font-weight: 600;"></span>
+                    <button onclick="handleLogout()" class="btn btn-secondary btn-sm">🚪 Çıkış</button>
+                </div>
+            </div>
+
+            <!-- Balance Card -->
+            <div class="balance-card">
+                <div class="balance-label">💰 Toplam Bakiye</div>
+                <div class="balance-amount" id="balanceAmount">0.00 ₺</div>
+                <button onclick="showAddBalance()" class="btn btn-success" style="max-width: 300px; margin: 0 auto;">
+                    ➕ Bakiye Yükle
+                </button>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('sendMoney')">
+                    <span style="font-size: 1.2rem;">💸</span> Para Gönder
+                </button>
+                <button class="tab" onclick="showTab('cardTransfer')">
+                    <span style="font-size: 1.2rem;">🔄</span> Kart Transfer
+                </button>
+                <button class="tab" onclick="showTab('exchange')">
+                    <span style="font-size: 1.2rem;">💱</span> Döviz
+                </button>
+                <button class="tab" onclick="showTab('transactions')">
+                    <span style="font-size: 1.2rem;">📊</span> İşlemler
+                </button>
+                <button class="tab" onclick="showTab('cards')">
+                    <span style="font-size: 1.2rem;">💳</span> Kartlar
+                </button>
+            </div>
+
+            <!-- Send Money Tab -->
+            <div id="sendMoneyTab" class="tab-content active">
+                <h3>Para Gönder</h3>
+                <form onsubmit="handleSendMoney(event)">
+                    <div class="form-group">
+                        <label>Alıcı Email</label>
+                        <input type="email" id="recipientEmail" placeholder="alici@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Miktar (₺)</label>
+                        <input type="number" id="sendAmount" step="0.01" min="0.01" placeholder="0.00" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Açıklama (opsiyonel)</label>
+                        <input type="text" id="sendDescription" placeholder="Örn: Kahve borcu">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Gönder</button>
+                </form>
+            </div>
+
+            <!-- Card Transfer Tab -->
+            <div id="cardTransferTab" class="tab-content">
+                <h3>Kartlar Arası Transfer</h3>
+                <form onsubmit="handleCardTransfer(event)">
+                    <div class="form-group">
+                        <label>Gönderen Kart</label>
+                        <select id="fromCard" class="form-control" required>
+                            <option value="">Kart seçiniz...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Alıcı Kart</label>
+                        <select id="toCard" class="form-control" required>
+                            <option value="">Kart seçiniz...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Miktar (USD)</label>
+                        <input type="number" id="transferAmount" step="0.01" min="0.01" placeholder="0.00" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Transfer Et</button>
+                </form>
+            </div>
+
+            <!-- Exchange Tab -->
+            <div id="exchangeTab" class="tab-content">
+                <h3>💱 Döviz Çevirme - 20 Para Birimi</h3>
+                <div class="currency-grid" id="currencyGrid">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+                <form onsubmit="handleExchange(event)" style="margin-top: 24px;">
+                    <div class="form-group">
+                        <label>Kart Seç</label>
+                        <select id="exchangeCard" class="form-control" required>
+                            <option value="">Kart seçiniz...</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Dönüştür</label>
+                            <select id="fromCurrency" class="form-control" required>
+                                <option value="">Seçiniz...</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="display: flex; align-items: center; justify-content: center;">
+                            <span style="font-size: 2rem;">→</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Hedef</label>
+                            <select id="toCurrency" class="form-control" required>
+                                <option value="">Seçiniz...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Miktar</label>
+                        <input type="number" id="exchangeAmount" step="0.01" min="0.01" placeholder="0.00" required>
+                    </div>
+                    <div class="exchange-preview" id="exchangePreview" style="display: none;">
+                        <!-- Preview will be shown here -->
+                    </div>
+                    <button type="submit" class="btn btn-primary">💸 Çevir</button>
+                </form>
+            </div>
+
+            <!-- Transactions Tab -->
+            <div id="transactionsTab" class="tab-content">
+                <h3>İşlem Geçmişi</h3>
+                <div id="transactionsList" class="transactions-list">
+                    <p class="empty-state">Henüz işlem yok</p>
+                </div>
+            </div>
+
+            <!-- Cards Tab -->
+            <div id="cardsTab" class="tab-content">
+                <h3>Kredi Kartlarım</h3>
+                <button onclick="showAddCard()" class="btn btn-success mb-3">➕ Yeni Kart Ekle</button>
+                <div id="cardsList" class="cards-list">
+                    <p class="empty-state">Henüz kart eklenmemiş</p>
+                </div>
+            </div>
+
+            <div id="dashboardMessage" class="message"></div>
+        </div>
+    </div>
+
+    <!-- Add Card Modal -->
+    <div id="addCardModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Yeni Kart Ekle</h3>
+                <button onclick="closeModal('addCardModal')" class="close">&times;</button>
+            </div>
+            <form onsubmit="handleAddCard(event)">
+                <div class="form-group">
+                    <label>Kart Tipi</label>
+                    <select id="cardType" class="form-control" required>
+                        <option value="">Seçiniz...</option>
+                        <option value="Visa">💳 Visa</option>
+                        <option value="Mastercard">💳 Mastercard</option>
+                        <option value="Troy">💳 Troy</option>
+                    </select>
+                    <small>Her kart 200,000 USD başlangıç bakiyesi ile gelir</small>
+                </div>
+                <div class="form-group">
+                    <label>Kart Numarası</label>
+                    <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" 
+                           pattern="[0-9\s]{19}" maxlength="19" required>
+                    <small>Simüle kart - herhangi bir 16 haneli numara girebilirsiniz</small>
+                </div>
+                <div class="form-group">
+                    <label>Kart Sahibi</label>
+                    <input type="text" id="cardHolder" placeholder="AD SOYAD" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Son Kullanma</label>
+                        <input type="text" id="cardExpiry" placeholder="MM/YY" 
+                               pattern="[0-9]{2}/[0-9]{2}" maxlength="5" required>
+                    </div>
+                    <div class="form-group">
+                        <label>CVV</label>
+                        <input type="text" id="cardCVV" placeholder="123" 
+                               pattern="[0-9]{3}" maxlength="3" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Kartı Ekle</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Balance Modal -->
+    <div id="addBalanceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Bakiye Yükle</h3>
+                <button onclick="closeModal('addBalanceModal')" class="close">&times;</button>
+            </div>
+            <div id="cardSelectionArea">
+                <div class="form-group">
+                    <label>Kart Seç</label>
+                    <select id="selectedCard" class="form-control" required>
+                        <option value="">Kart seçiniz...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Miktar (₺)</label>
+                    <input type="number" id="addBalanceAmount" step="0.01" min="10" placeholder="0.00" required>
+                </div>
+                <button onclick="handleAddBalance()" class="btn btn-primary">Yükle</button>
+                <p class="info-text">Simüle sistem - istediğiniz miktarı ekleyebilirsiniz</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
