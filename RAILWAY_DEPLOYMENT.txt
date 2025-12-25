@@ -1,0 +1,69 @@
+=======================================
+🚂 RAILWAY.APP DEPLOYMENT - EN KOLAY!
+=======================================
+
+Railway.app Render'dan daha kolay!
+
+ADIM 1: Railway'e Kayıt Olun
+-----------------------------
+1. Git: https://railway.app
+2. "Login" tıklayın
+3. "Login with GitHub" seçin
+4. GitHub hesabınızla giriş yapın
+
+ADIM 2: Proje Oluşturun (3 TIK!)
+---------------------------------
+1. "New Project" tıklayın
+2. "Deploy from GitHub repo" seçin
+3. "paypal-mvp" repository'sini seçin
+4. BAŞLADI! ✅
+
+=======================================
+🎉 BU KADAR!
+=======================================
+
+Railway otomatik olarak:
+✅ Python algılar
+✅ requirements.txt'yi bulur
+✅ Build eder
+✅ Deploy eder
+✅ HTTPS verir
+✅ Domain verir
+
+Deploy Süresi: ~2 dakika
+
+URL: https://paypal-mvp.up.railway.app
+(veya özel domain)
+
+=======================================
+💰 MALIYET
+=======================================
+
+$5 ücretsiz kredi/ay
+~550 saat/ay ücretsiz
+
+=======================================
+⚙️ AYARLAR (Opsiyonel)
+=======================================
+
+Settings'te:
+- Custom domain ekleyebilirsiniz
+- Environment variables ekleyebilirsiniz
+- Scale up yapabilirsiniz
+
+=======================================
+📊 KARŞILAŞTIRMA
+=======================================
+
+Railway vs Render:
+✅ Railway daha hızlı deploy
+✅ Railway daha az sleep mode
+✅ Railway daha iyi free tier
+⚠️ Railway $5 kredi bittikten sonra ücretli
+
+Render:
+✅ Tamamen ücretsiz (sınırsız)
+⚠️ Daha çok sleep mode
+⚠️ İlk istek daha yavaş
+
+Öneri: İkisini de deneyin! 🚀

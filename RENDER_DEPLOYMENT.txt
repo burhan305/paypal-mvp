@@ -1,0 +1,88 @@
+=======================================
+🚀 RENDER.COM DEPLOYMENT - ADIM ADIM
+=======================================
+
+✅ GitHub'a yükleme tamamlandıktan sonra:
+
+ADIM 1: Render.com'a Kayıt Olun
+--------------------------------
+1. Git: https://render.com
+2. "Get Started for Free" tıklayın
+3. "Sign up with GitHub" seçin
+4. GitHub hesabınızla giriş yapın
+5. Render'a GitHub erişimi verin
+
+ADIM 2: Web Service Oluşturun
+------------------------------
+1. Dashboard'da "New +" butonuna tıklayın
+2. "Web Service" seçin
+3. "Connect a repository" altında:
+   - GitHub'ı seçin (zaten bağlı)
+   - "paypal-mvp" repository'sini bulun
+   - "Connect" tıklayın
+
+ADIM 3: Ayarları Yapılandırın
+------------------------------
+Name: paypal-mvp
+Region: Yakınınızdaki region seçin (örn: Frankfurt)
+Branch: main
+Runtime: Python 3
+
+Build Command:
+pip install -r requirements.txt
+
+Start Command:
+gunicorn app:app
+
+Instance Type: Free
+
+ADIM 4: Environment Variables (Opsiyonel)
+------------------------------------------
+"Advanced" açın ve ekleyin:
+
+Key: FLASK_DEBUG
+Value: False
+
+ADIM 5: Deploy!
+----------------
+1. "Create Web Service" butonuna tıklayın
+2. 2-3 dakika bekleyin (build olacak)
+3. Yeşil "Live" göründüğünde HAZIR! ✅
+
+=======================================
+📱 SİTENİZ CANLIYA ALDI!
+=======================================
+
+URL: https://paypal-mvp.onrender.com
+
+Demo Hesap:
+- Email: test@paypal.com
+- Şifre: 123456
+
+Özellikler:
+✅ 20 Para Birimi
+✅ Dark/Light Tema
+✅ Visa/Mastercard/Troy
+✅ Kartlar Arası Transfer
+✅ Döviz Çevirme
+✅ Modern UI/UX
+
+=======================================
+⚠️ ÖNEMLİ NOTLAR
+=======================================
+
+1. Free plan 750 saat/ay limit
+2. İnaktivitede sleep mode (ilk istek 30-60 saniye)
+3. Custom domain ekleyebilirsiniz
+4. Otomatik HTTPS
+5. Her GitHub push'ta otomatik deploy
+
+=======================================
+🎉 TEBRIKLER!
+=======================================
+
+Siteniz artık 7/24 erişilebilir!
+Herkesle paylaşabilirsiniz!
+
+GitHub: https://github.com/burhan305/paypal-mvp
+Site: https://paypal-mvp.onrender.com

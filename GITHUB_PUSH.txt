@@ -1,0 +1,19 @@
+GitHub'a Push Komutları
+========================
+
+ADIM 1: Terminal'de çalıştırın
+-------------------------------
+cd C:\Users\BBM\Workspace\paypal_mvp_blueprint
+
+ADIM 2: GitHub'a push (TOKEN yerine kendi token'ınızı yazın)
+-------------------------------------------------------------
+git push -u origin main
+
+Not: Username isterse: burhan305
+Not: Password isterse: TOKEN'INIZI yapıştırın (ghp_xxxxxxxxxxxx)
+
+Alternatif (Token ile doğrudan):
+git remote set-url origin https://TOKEN@github.com/burhan305/paypal-mvp.git
+git push -u origin main
+
+TOKEN yerine: GitHub Personal Access Token'ınızı yazın
