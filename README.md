@@ -230,3 +230,5 @@ Geliştirilme Tarihi: Aralık 2025
 ---
 
 **⭐ Projeyi beğendiyseniz yıldız vermeyi unutmayın!**
+
+Proje şaka amaçlı yapılmıştır buradaki herşey sahtedir
