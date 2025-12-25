@@ -9,7 +9,8 @@ import os
 app = Flask(__name__, static_folder='static')
 CORS(app)
 
-DATABASE = 'paypal_mvp.db'
+# Use /tmp directory for SQLite on Render (ephemeral but writable)
+DATABASE = os.path.join('/tmp', 'paypal_mvp.db') if os.path.exists('/tmp') else 'paypal_mvp.db'
 
 def get_db():
     conn = sqlite3.connect(DATABASE)
@@ -567,9 +568,24 @@ def get_transactions(user_id):
     
     return jsonify(result), 200
 
+# Error handler for better debugging
+@app.errorhandler(Exception)
+def handle_error(error):
+    import traceback
+    app.logger.error(f"Error: {str(error)}")
+    app.logger.error(traceback.format_exc())
+    return jsonify({'error': str(error), 'type': type(error).__name__}), 500
+
+# Initialize database on app startup (for both gunicorn and direct run)
+try:
+    with app.app_context():
+        init_db()
+        app.logger.info(f"Database initialized at {DATABASE}")
+except Exception as e:
+    app.logger.error(f"Failed to initialize database: {str(e)}")
+    raise
+
 if __name__ == '__main__':
-    init_db()
-    import os
     debug_mode = os.environ.get('FLASK_DEBUG', 'False').lower() == 'true'
     port = int(os.environ.get('PORT', 5000))
     app.run(debug=debug_mode, host='0.0.0.0', port=port)
